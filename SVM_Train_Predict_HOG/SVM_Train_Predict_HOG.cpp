@@ -143,7 +143,7 @@ int main()
 		cout<<"开始训练SVM分类器"<<endl;
 		svm->train(sampleFeatureMat, SampleTypes::ROW_SAMPLE, sampleLabelMat);
 		cout<<"训练完成"<<endl;
-		svm->save("SVM_HOG.xml");//将训练好的SVM模型保存为xml文件
+		svm->save("SVM_HOG_1500PosINRIA_2000Neg(太多误报).xml");//将训练好的SVM模型保存为xml文件
 
 	}
 	else //若TRAIN为false，从XML文件读取训练好的分类器
@@ -201,8 +201,8 @@ int main()
 	}
 
 	/**************读入图片进行HOG行人检测******************/
-	Mat src = imread("00000.jpg");
-	//Mat src = imread("2007_000423.jpg");
+	//Mat src = imread("00000.jpg");
+	Mat src = imread("2007_000423.jpg");
 	//Mat src = imread("noperson000001.jpg");
 	vector<Rect> found, found_filtered;//矩形框数组
 	cout<<"进行多尺度HOG人体检测"<<endl;
@@ -213,7 +213,7 @@ int main()
 	myHOG.detectMultiScale(src, found, 0, Size(8,8), Size(32,32), 1.05, 2);//对图片进行多尺度行人检测
 	finish = clock();
 	TheTimes = finish - start;
-	printf("%f毫秒\n", TheTimes);
+	printf("%d毫秒\n", int(TheTimes));
 
 	 //src为输入待检测的图片；found为检测到目标区域列表；参数3为程序内部计算为行人目标的阈值，也就是检测到的特征到SVM分类超平面的距离;
     //参数4为滑动窗口每次移动的距离。它必须是块移动的整数倍；参数5为图像扩充的大小；参数6为比例系数，即测试图片每次尺寸缩放增加的比例；
